@@ -2,33 +2,45 @@ package config
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/spf13/viper"
 )
 
 var vipr *viper.Viper
 
-func init() {
+func Init(env string) {
 	fmt.Println("Creating New Config Instance.....")
-	NewConfig()
+	NewConfig(env)
 }
 
-func NewConfig() {
+func NewConfig(env string) {
 	conf := viper.New()
-	conf.SetConfigName(os.Getenv("config"))
-	conf.SetConfigType(os.Getenv("extension"))
-	conf.AddConfigPath("/deployment/config")
+	conf.SetConfigType("json")
+	conf.SetConfigName(env)
+	conf.AddConfigPath("../config/")
+	conf.AddConfigPath("config/")
+	conf.AddConfigPath(".")
 	err := conf.ReadInConfig()
 	if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 		fmt.Println("Config File not found.")
-	} else {
-		fmt.Println("Error in Config file Read:", err.Error())
+	} else if err != nil {
+		fmt.Println("Error:", err.Error())
 	}
+
 	vipr = conf
 }
 
 // GetString Used Get Value Using Key
 func GetString(key string) string {
 	return vipr.GetString(key)
+}
+
+// GetString Used Get Value(int64) Using Key
+func GetInt64(key string) int64 {
+	return vipr.GetInt64(key)
+}
+
+// GetBool Used Get Value(boolean) Using Key
+func GetBool(key string) bool {
+	return vipr.GetBool(key)
 }

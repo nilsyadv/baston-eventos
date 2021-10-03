@@ -1,0 +1,15 @@
+{
+    "server":{
+        "server_port":8089,
+        "server_host":"127.0.0.1",
+        "read_timeout":30,
+        "write_timeout":30
+    },
+    "db":{
+        "db_name":"baston_eventos",
+        "db_host":"postgres",
+        "db_user":"db_eventos",
+        "db_pass":"KKJH8969KJH7869",
+        "db_port":"5432"
+    }
+}
