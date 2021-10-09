@@ -26,7 +26,6 @@ func NewConfig(env string) {
 	} else if err != nil {
 		fmt.Println("Error:", err.Error())
 	}
-
 	vipr = conf
 }
 
