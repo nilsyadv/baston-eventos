@@ -37,18 +37,3 @@ func RespondJSONWithXTotalCount(w http.ResponseWriter, status int, count int, pa
 func RespondErrorMessage(w http.ResponseWriter, code int, message string) {
 	RespondJSON(w, code, map[string]string{"error": message})
 }
-
-// RespondError returns a validation error else
-// func RespondError(w http.ResponseWriter, err error) {
-// 	switch err.(type) {
-// 	case microappError.ValidationError:
-// 		RespondJSON(w, http.StatusBadRequest, err)
-// 	case microappError.HTTPResourceNotFound:
-// 		RespondJSON(w, http.StatusNotFound, err)
-// 	case microappError.HTTPError:
-// 		httpError := err.(microappError.HTTPError)
-// 		RespondErrorMessage(w, httpError.HTTPStatus, httpError.ErrorKey)
-// 	default:
-// 		RespondErrorMessage(w, http.StatusInternalServerError, microappError.ErrorCodeInternalError)
-// 	}
-// }

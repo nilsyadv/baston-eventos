@@ -3,7 +3,7 @@ package util
 import (
 	"net/http"
 
-	custerror "github.com/lin-sel/baston-eventos/error"
+	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
 	uuid "github.com/satori/go.uuid"
 )
 

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	custerror "github.com/lin-sel/baston-eventos/error"
+	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
 )
 
 func RequestParse(r *http.Request, target interface{}) *custerror.CustomeError {

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/lin-sel/baston-eventos/config"
-	"github.com/lin-sel/baston-eventos/internal/db"
-	"github.com/lin-sel/baston-eventos/server"
+	"github.com/Nilesh-Coherent/baston-eventos/config"
+	"github.com/Nilesh-Coherent/baston-eventos/internal/db"
+	"github.com/Nilesh-Coherent/baston-eventos/server"
 )
 
 func main() {

@@ -6,7 +6,7 @@ services:
     command: sh deployment/dev.sh
     volumes:
       - ..:/app
-      - ~/.ssh/id_rsa_nilesh:/root/.ssh/id_rsa
+      - ~/.ssh/id_ed25519:/root/.ssh/id_rsa
     ports: 
       - 8089:8089
     env_file:
