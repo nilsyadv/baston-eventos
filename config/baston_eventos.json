@@ -1,15 +1,16 @@
 {
     "server":{
-        "server_port":8089,
-        "server_host":"127.0.0.1",
-        "read_timeout":30,
-        "write_timeout":30
+        "port":8089,
+        "read_time_out":30,
+        "write_time_out":30
     },
     "db":{
-        "db_name":"baston_eventos",
+        "db_name":"bastondb",
         "db_host":"postgres",
-        "db_user":"db_eventos",
-        "db_pass":"KKJH8969KJH7869",
-        "db_port":"5432"
+        "db_user":"jkdlioeu8*i*(U)*&()",
+        "db_pass":"owe890801827998*(&*ijskdj)",
+        "db_port":"5432",
+        "db_ssl": "disable",
+        "db_timezone": "Asia/Shanghai"
     }
 }
