@@ -3,8 +3,9 @@ package util
 import (
 	"net/http"
 
-	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
 	uuid "github.com/satori/go.uuid"
+
+	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
 )
 
 // ParseID Used to Parse Id From String
@@ -18,9 +19,9 @@ func ParseID(id string) (uuid.UUID, *custerror.CustomeError) {
 }
 
 // CreateID Used to Generate New ID
-func CreateID() string {
+func CreateID() (string, uuid.UUID) {
 	id := uuid.NewV4()
-	return id.String()
+	return id.String(), id
 }
 
 // ValidateIDFormat Used to Validate ID Format

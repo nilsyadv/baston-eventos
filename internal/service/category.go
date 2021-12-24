@@ -12,7 +12,7 @@ import (
 	"github.com/Nilesh-Coherent/common-service-evnt/pkg/repository"
 )
 
-func GetCategory(category *model.ECategory, id uuid.UUID) *custerror.CustomeError {
+func GetCategory(category *model.Category, id uuid.UUID) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, true)
 	err := repository.Get(uow, category, id, []string{})
 	if err != nil {
@@ -24,31 +24,35 @@ func GetCategory(category *model.ECategory, id uuid.UUID) *custerror.CustomeErro
 	return nil
 }
 
-func GetCategories(categories *[]model.ECategory) *custerror.CustomeError {
+func GetCategories(categories *[]model.Category) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, true)
 	err := repository.GetAll(uow, categories, []repository.ConditionalClause{})
 	if err != nil {
 		er := custerror.CreateCustomeError("Failed to get all Category from db", err,
 			http.StatusInternalServerError)
+		uow.RollBack()
 		log.Println(er.Error(), er.Message())
 		return &er
 	}
+	uow.Commit()
 	return nil
 }
 
-func AddCategory(category *model.ECategory) *custerror.CustomeError {
+func AddCategory(category *model.Category) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
 	err := repository.Add(uow, category)
 	if err != nil {
 		er := custerror.CreateCustomeError("Failed to add New Category in db", err,
 			http.StatusInternalServerError)
+		uow.RollBack()
 		log.Println(er.Error(), er.Message())
 		return &er
 	}
+	uow.Commit()
 	return nil
 }
 
-func UpdateCategory(category *model.ECategory) *custerror.CustomeError {
+func UpdateCategory(category *model.Category) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
 	err := repository.Update(uow, category)
 	if err != nil {
@@ -60,9 +64,9 @@ func UpdateCategory(category *model.ECategory) *custerror.CustomeError {
 	return nil
 }
 
-func DeleteCategory(category *model.ECategory) *custerror.CustomeError {
+func DeleteCategory(category *model.Category) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
-	err := repository.Delete(uow, category, repository.Filter("category_id = ?", category.CategoryID))
+	err := repository.Delete(uow, category, repository.Filter("id = ?", category.ID))
 	if err != nil {
 		er := custerror.CreateCustomeError("Failed to delete Category in db", err,
 			http.StatusInternalServerError)

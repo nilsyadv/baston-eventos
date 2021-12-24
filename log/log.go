@@ -1,7 +1,6 @@
 package log
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
@@ -9,11 +8,11 @@ import (
 var Log *log.Logger
 
 func init() {
-	fmt.Println("Creating New Instance of Logger....")
 	NewLogger()
+	Log.Println("New Instance Of Logger Created Successfully.")
 }
 
 // Creating new logger
 func NewLogger() {
-	Log = log.New(os.Stderr, "baston-eventos", 1)
+	Log = log.New(os.Stderr, "baston-eventos ", 1)
 }

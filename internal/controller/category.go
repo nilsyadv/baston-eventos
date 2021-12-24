@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -18,13 +19,14 @@ func NewCategoryController() *CategoryController {
 }
 
 func (categorycont *CategoryController) AddCategory(w http.ResponseWriter, r *http.Request) {
-	var category model.ECategory
+	var category model.Category
+	log.Println("Add Category Service Called.....")
 	err := web.RequestParse(r, &category)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
 		return
 	}
-	category.CategoryID = util.CreateID()
+	_, category.ID = util.CreateID()
 	err = service.AddCategory(&category)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
@@ -34,7 +36,7 @@ func (categorycont *CategoryController) AddCategory(w http.ResponseWriter, r *ht
 }
 
 func (categorycont *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Request) {
-	var category model.ECategory
+	var category model.Category
 	err := web.RequestParse(r, &category)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
@@ -48,7 +50,12 @@ func (categorycont *CategoryController) UpdateCategory(w http.ResponseWriter, r 
 		return
 	}
 
-	category.CategoryID = params["categoryid"]
+	category.ID, err = util.ParseID(params["categoryid"])
+	if err != nil {
+		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
+		return
+	}
+
 	err = service.UpdateCategory(&category)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
@@ -58,7 +65,7 @@ func (categorycont *CategoryController) UpdateCategory(w http.ResponseWriter, r 
 }
 
 func (categorycont *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Request) {
-	var category model.ECategory
+	var category model.Category
 	params := mux.Vars(r)
 	err := util.ValidateIDFormat(params["categoryid"])
 	if err != nil {
@@ -66,7 +73,11 @@ func (categorycont *CategoryController) DeleteCategory(w http.ResponseWriter, r 
 		return
 	}
 
-	category.CategoryID = params["categoryid"]
+	category.ID, err = util.ParseID(params["categoryid"])
+	if err != nil {
+		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
+		return
+	}
 	err = service.DeleteCategory(&category)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
@@ -76,7 +87,7 @@ func (categorycont *CategoryController) DeleteCategory(w http.ResponseWriter, r 
 }
 
 func (categorycont *CategoryController) GetCategory(w http.ResponseWriter, r *http.Request) {
-	var category model.ECategory
+	var category model.Category
 	params := mux.Vars(r)
 	categoryid, err := util.ParseID(params["categoryid"])
 	if err != nil {
@@ -93,7 +104,7 @@ func (categorycont *CategoryController) GetCategory(w http.ResponseWriter, r *ht
 }
 
 func (categorycont *CategoryController) GetCategories(w http.ResponseWriter, r *http.Request) {
-	var categories []model.ECategory
+	var categories []model.Category
 	err := service.GetCategories(&categories)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
