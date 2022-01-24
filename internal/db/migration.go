@@ -10,7 +10,6 @@ func Migration() {
 		&model.Category{},
 		&model.Event{},
 		&model.Payment{},
-		&model.PaymentHistory{},
 	}
 
 	// automigrating all tables

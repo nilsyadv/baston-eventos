@@ -24,6 +24,24 @@ func GetCategory(category *model.Category, id uuid.UUID) *custerror.CustomeError
 	return nil
 }
 
+func IsCategoryValid(category *model.Category, id uuid.UUID) (bool, *custerror.CustomeError) {
+	uow := repository.NewUnitOfWork(db.DB, true)
+	err := repository.Get(uow, category, id, []string{})
+	if err != nil {
+		er := custerror.CreateCustomeError("Failed to get Category from db", err,
+			http.StatusInternalServerError)
+		log.Println(er.Error(), er.Message())
+		return false, &er
+	}
+
+	isempty := &model.Category{} == category
+	if isempty {
+		return false, nil
+	}
+
+	return true, nil
+}
+
 func GetCategories(categories *[]model.Category) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, true)
 	err := repository.GetAll(uow, categories, []repository.ConditionalClause{})

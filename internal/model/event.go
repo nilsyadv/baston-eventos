@@ -8,12 +8,11 @@ import (
 
 type Event struct {
 	model.Trandb
-	EventID          string    `json:"event_id"`
 	EventName        string    `json:"event_name"`
 	EventLocation    string    `json:"event_location"`
 	EventDate        string    `json:"event_date"`
-	Category         Category  `json:"event_category"`
-	CategoryID       uuid.UUID `json:"-"`
+	Category         Category  `json:"-"`
+	CategoryID       uuid.UUID `json:"Category_id"`
 	EventDescription string    `json:"event_description"`
-	PaymentDetails   []Payment `json:"payment_details" gorm:"foreignKey:TransactionID"`
+	PaymentDetails   []Payment `json:"payment_details,omitempty" gorm:"foreignKey:ID"`
 }

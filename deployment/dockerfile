@@ -6,8 +6,8 @@ RUN go env -w GOPRIVATE=github.com/Nilesh-Coherent/*
 RUN mkdir /root/.ssh
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 RUN printf "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root/.gitconfig
-RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
-    chmod 600 /root/.ssh/id_rsa
+RUN echo "$ssh_prv_key" > /root/.ssh/id_ed25519 && \
+    chmod 600 /root/.ssh/id_ed25519
 ADD go.mod /app/go.mod
 ADD go.sum /app/go.sum
 WORKDIR /app
@@ -26,7 +26,6 @@ RUN ls -la /build
 FROM alpine:latest
 RUN apk --no-cache add  curl ca-certificates tzdata
 COPY --from=builder /app/config /config
-COPY --from=builder /app/docs /app/docs
 COPY --from=builder /app/deployment /app/deployment
 COPY --from=builder /build /app
 RUN chmod +x /app/main
