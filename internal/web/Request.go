@@ -31,7 +31,7 @@ func RequestParse(r *http.Request, target interface{}) *custerror.CustomeError {
 
 	err = json.Unmarshal(body, target)
 	if err != nil {
-		err := custerror.CreateCustomeError("Failed to Unmarshal Request Body", errors.New(""),
+		err := custerror.CreateCustomeError("Failed to Unmarshal Request Body", err,
 			http.StatusInternalServerError)
 		return &err
 	}

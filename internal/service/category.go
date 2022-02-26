@@ -19,8 +19,10 @@ func GetCategory(category *model.Category, id uuid.UUID) *custerror.CustomeError
 		er := custerror.CreateCustomeError("Failed to get Category from db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
+		uow.RollBack()
 		return &er
 	}
+	uow.Commit()
 	return nil
 }
 
@@ -31,9 +33,10 @@ func IsCategoryValid(category *model.Category, id uuid.UUID) (bool, *custerror.C
 		er := custerror.CreateCustomeError("Failed to get Category from db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
+		uow.RollBack()
 		return false, &er
 	}
-
+	uow.Commit()
 	isempty := &model.Category{} == category
 	if isempty {
 		return false, nil
@@ -77,8 +80,10 @@ func UpdateCategory(category *model.Category) *custerror.CustomeError {
 		er := custerror.CreateCustomeError("Failed to update Category in db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
+		uow.RollBack()
 		return &er
 	}
+	uow.Commit()
 	return nil
 }
 
@@ -89,7 +94,9 @@ func DeleteCategory(category *model.Category) *custerror.CustomeError {
 		er := custerror.CreateCustomeError("Failed to delete Category in db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
+		uow.RollBack()
 		return &er
 	}
+	uow.Commit()
 	return nil
 }

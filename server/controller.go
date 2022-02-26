@@ -27,10 +27,20 @@ func CreateCategoryRoute(route *mux.Router) {
 	route.HandleFunc("/event/{eventid}", event.DeleteEvent).Methods(http.MethodDelete)
 
 	// register payment
+	paymntroute := route.PathPrefix("/payment").Subrouter()
 	payment := controller.NewPaymentController()
-	route.HandleFunc("/payment", payment.GetPayments).Methods(http.MethodGet)
-	route.HandleFunc("/payment", payment.AddPayment).Methods(http.MethodPost)
-	route.HandleFunc("/payment/{paymentid}", payment.GetPayment).Methods(http.MethodGet)
-	route.HandleFunc("/payment/{paymentid}", payment.UpdatePayment).Methods(http.MethodPut)
-	route.HandleFunc("/payment/{paymentid}", payment.DeletePayment).Methods(http.MethodDelete)
+	paymntroute.HandleFunc("/", payment.GetPayments).Methods(http.MethodGet)
+	paymntroute.HandleFunc("/", payment.AddPayment).Methods(http.MethodPost)
+	paymntroute.HandleFunc("/{paymentid}", payment.GetPayment).Methods(http.MethodGet)
+	paymntroute.HandleFunc("/{paymentid}", payment.UpdatePayment).Methods(http.MethodPut)
+	paymntroute.HandleFunc("/{paymentid}", payment.DeletePayment).Methods(http.MethodDelete)
+	paymntroute.HandleFunc("/event/{eventid}", payment.GetPaymentByEvent).Methods(http.MethodGet)
+
+	payhist := controller.NewPaymentHistoryController()
+	paymntroute.HandleFunc("/history", payhist.GetPaymentHistory).Methods(http.MethodGet)
+	paymntroute.HandleFunc("/history", payhist.AddPaymentHistory).Methods(http.MethodPost)
+	paymntroute.HandleFunc("/history/{histid}", payhist.GetPaymentHistory).Methods(http.MethodGet)
+	paymntroute.HandleFunc("/history/{histid}", payhist.UpdatePaymentHistory).Methods(http.MethodPut)
+	paymntroute.HandleFunc("/history/{histid}", payhist.DeletePaymentHistory).Methods(http.MethodDelete)
+	paymntroute.HandleFunc("/history/payment/{paymentid}", payhist.GetHistoryByPayment).Methods(http.MethodGet)
 }

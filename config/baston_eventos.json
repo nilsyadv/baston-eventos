@@ -7,8 +7,8 @@
     "db":{
         "db_name":"bastondb",
         "db_host":"postgres",
-        "db_user":"jkdlioeu8*i*(U)*&()",
-        "db_pass":"owe890801827998*(&*ijskdj)",
+        "db_user":"baston_usr_test",
+        "db_pass":"test",
         "db_port":"5432",
         "db_ssl": "disable",
         "db_timezone": "Asia/Shanghai"

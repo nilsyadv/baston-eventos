@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -10,6 +9,8 @@ import (
 	"github.com/Nilesh-Coherent/baston-eventos/internal/service"
 	"github.com/Nilesh-Coherent/baston-eventos/internal/util"
 	"github.com/Nilesh-Coherent/baston-eventos/internal/web"
+	"github.com/Nilesh-Coherent/baston-eventos/log"
+	"github.com/Nilesh-Coherent/common-service-evnt/pkg/repository"
 )
 
 type PaymentController struct{}
@@ -20,7 +21,7 @@ func NewPaymentController() *PaymentController {
 
 func (paymentcont *PaymentController) AddPayment(w http.ResponseWriter, r *http.Request) {
 	var payment model.Payment
-	log.Println("Add Payment Service Called.....")
+	log.Log.Println("Add Payment Service Called.....")
 	err := web.RequestParse(r, &payment)
 	if err != nil {
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
@@ -39,6 +40,7 @@ func (paymentcont *PaymentController) UpdatePayment(w http.ResponseWriter, r *ht
 	var payment model.Payment
 	err := web.RequestParse(r, &payment)
 	if err != nil {
+		log.Log.Printf("Error: %s", err.Error())
 		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
 		return
 	}
@@ -101,6 +103,23 @@ func (paymentcont *PaymentController) GetPayment(w http.ResponseWriter, r *http.
 		return
 	}
 	web.RespondJSON(w, http.StatusOK, &payment)
+}
+
+func (paymentcont *PaymentController) GetPaymentByEvent(w http.ResponseWriter, r *http.Request) {
+	var payments []model.Payment
+	params := mux.Vars(r)
+	eventid, err := util.ParseID(params["eventid"])
+	if err != nil {
+		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
+		return
+	}
+
+	err = service.GetPayments(&payments, repository.Filter("event_id = ?", eventid))
+	if err != nil {
+		web.RespondErrorMessage(w, err.ResponseCode, err.Message())
+		return
+	}
+	web.RespondJSON(w, http.StatusOK, &payments)
 }
 
 func (paymentcont *PaymentController) GetPayments(w http.ResponseWriter, r *http.Request) {

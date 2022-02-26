@@ -12,11 +12,11 @@ import (
 	"github.com/Nilesh-Coherent/common-service-evnt/pkg/repository"
 )
 
-func GetPayment(payment *model.Payment, id uuid.UUID) *custerror.CustomeError {
+func GetPaymentHistory(payhist *model.PaymentHistory, id uuid.UUID) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, true)
-	err := repository.Get(uow, payment, id, []string{"PaymentHistory"})
+	err := repository.Get(uow, payhist, id, []string{})
 	if err != nil {
-		er := custerror.CreateCustomeError("Failed to get Payment from db", err,
+		er := custerror.CreateCustomeError("Failed to get Payment History from db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
 		uow.RollBack()
@@ -26,30 +26,11 @@ func GetPayment(payment *model.Payment, id uuid.UUID) *custerror.CustomeError {
 	return nil
 }
 
-func IsPaymentValid(payment *model.Payment, id uuid.UUID) (bool, *custerror.CustomeError) {
+func GetPaymentHistories(payhists *[]model.PaymentHistory, conditions ...repository.ConditionalClause) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, true)
-	err := repository.Get(uow, payment, id, []string{})
+	err := repository.GetAll(uow, payhists, conditions)
 	if err != nil {
-		er := custerror.CreateCustomeError("Failed to get Payment from db", err,
-			http.StatusInternalServerError)
-		log.Println(er.Error(), er.Message())
-		return false, &er
-	}
-
-	isempty := &model.Payment{} == payment
-	if isempty {
-		return false, nil
-	}
-
-	return true, nil
-}
-
-func GetPayments(payments *[]model.Payment, conditions ...repository.ConditionalClause) *custerror.CustomeError {
-	uow := repository.NewUnitOfWork(db.DB, true)
-	conditions = append(conditions, repository.PreloadAssociations([]string{"PaymentHistory"}))
-	err := repository.GetAll(uow, payments, conditions)
-	if err != nil {
-		er := custerror.CreateCustomeError("Failed to get all Payment from db", err,
+		er := custerror.CreateCustomeError("Failed to get all Payment History from db", err,
 			http.StatusInternalServerError)
 		uow.RollBack()
 		log.Println(er.Error(), er.Message())
@@ -59,23 +40,31 @@ func GetPayments(payments *[]model.Payment, conditions ...repository.Conditional
 	return nil
 }
 
-func AddPayment(payment *model.Payment) *custerror.CustomeError {
+func AddPaymentHistory(payhist *model.PaymentHistory) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
 
 	// validate category
-	if ok, err := IsEventValid(&model.Event{}, payment.EventID); !ok {
-		er := custerror.CreateCustomeError("invalid category", err,
+	if ok, err := IsEventValid(&model.Event{}, payhist.PaymentID); !ok {
+		er := custerror.CreateCustomeError("invalid payment", err,
 			http.StatusBadRequest)
 		return &er
 	}
 
+	var payment model.Payment
+	if err := GetPayment(&payment, payhist.PaymentID); err != nil {
+		return err
+	}
+	payment.PaymentHistory = append(payment.PaymentHistory, *payhist)
 	if err := payment.PaymentCalculation(); err != nil {
 		er := custerror.CreateCustomeError("invalid payment detail", err,
 			http.StatusBadRequest)
 		return &er
 	}
+	if err := UpdatePayment(&payment); err != nil {
+		return err
+	}
 
-	err := repository.Add(uow, payment)
+	err := repository.Add(uow, payhist)
 	if err != nil {
 		er := custerror.CreateCustomeError("Failed to add New Payment in db", err,
 			http.StatusInternalServerError)
@@ -87,23 +76,31 @@ func AddPayment(payment *model.Payment) *custerror.CustomeError {
 	return nil
 }
 
-func UpdatePayment(payment *model.Payment) *custerror.CustomeError {
+func UpdatePaymentHistory(payhist *model.PaymentHistory) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
 
 	// validate category
-	if ok, err := IsEventValid(&model.Event{}, payment.EventID); !ok {
-		er := custerror.CreateCustomeError("invalid event", err,
+	if ok, err := IsEventValid(&model.Event{}, payhist.PaymentID); !ok {
+		er := custerror.CreateCustomeError("invalid payment", err,
 			http.StatusBadRequest)
 		return &er
 	}
 
+	var payment model.Payment
+	if err := GetPayment(&payment, payhist.PaymentID); err != nil {
+		return err
+	}
+	payment.PaymentHistory = append(payment.PaymentHistory, *payhist)
 	if err := payment.PaymentCalculation(); err != nil {
 		er := custerror.CreateCustomeError("invalid payment detail", err,
 			http.StatusBadRequest)
 		return &er
 	}
+	if err := UpdatePayment(&payment); err != nil {
+		return err
+	}
 
-	err := repository.Update(uow, payment)
+	err := repository.Update(uow, payhist)
 	if err != nil {
 		er := custerror.CreateCustomeError("Failed to update Payment in db", err,
 			http.StatusInternalServerError)
@@ -115,11 +112,11 @@ func UpdatePayment(payment *model.Payment) *custerror.CustomeError {
 	return nil
 }
 
-func DeletePayment(payment *model.Payment) *custerror.CustomeError {
+func DeletePaymentHistory(payhist *model.PaymentHistory) *custerror.CustomeError {
 	uow := repository.NewUnitOfWork(db.DB, false)
-	err := repository.Delete(uow, payment, repository.Filter("id = ?", payment.ID))
+	err := repository.Delete(uow, payhist, repository.Filter("id = ?", payhist.ID))
 	if err != nil {
-		er := custerror.CreateCustomeError("Failed to delete Payment in db", err,
+		er := custerror.CreateCustomeError("Failed to delete Payment History in db", err,
 			http.StatusInternalServerError)
 		log.Println(er.Error(), er.Message())
 		uow.RollBack()

@@ -15,6 +15,7 @@ func Initdb() {
 		return
 	}
 	log.Log.Println("database insatnce created successfully.....")
+	db.SetDebug()
 	DB = db
 	Migration()
 }

@@ -11,8 +11,8 @@ type Event struct {
 	EventName        string    `json:"event_name"`
 	EventLocation    string    `json:"event_location"`
 	EventDate        string    `json:"event_date"`
-	Category         Category  `json:"-"`
-	CategoryID       uuid.UUID `json:"Category_id"`
+	Category         *Category `json:"-" gorm:"foreignKey:ID"`
+	CategoryID       uuid.UUID `json:"category_id"`
 	EventDescription string    `json:"event_description"`
-	PaymentDetails   []Payment `json:"payment_details,omitempty" gorm:"foreignKey:ID"`
+	PaymentDetails   *Payment  `json:"payment_details,omitempty" gorm:"foreignKey:EventID"`
 }
