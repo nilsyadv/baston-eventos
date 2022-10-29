@@ -6,10 +6,10 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 
-	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/db"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/model"
-	"github.com/Nilesh-Coherent/common-service-evnt/pkg/repository"
+	custerror "github.com/nilsyadv/baston-eventos/error"
+	"github.com/nilsyadv/baston-eventos/internal/db"
+	"github.com/nilsyadv/baston-eventos/internal/model"
+	"github.com/nilsyadv/common-service-evnt/pkg/repository"
 )
 
 func GetEvent(event *model.Event, id uuid.UUID) *custerror.CustomeError {

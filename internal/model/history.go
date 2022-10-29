@@ -6,9 +6,9 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 
-	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/util"
-	"github.com/Nilesh-Coherent/common-service-evnt/pkg/model"
+	custerror "github.com/nilsyadv/baston-eventos/error"
+	"github.com/nilsyadv/baston-eventos/internal/util"
+	"github.com/nilsyadv/common-service-evnt/pkg/model"
 )
 
 type PaymentHistory struct {

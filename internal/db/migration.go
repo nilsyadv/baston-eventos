@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/Nilesh-Coherent/baston-eventos/internal/model"
-	"github.com/Nilesh-Coherent/baston-eventos/log"
+	"github.com/nilsyadv/baston-eventos/internal/model"
+	"github.com/nilsyadv/baston-eventos/log"
 )
 
 func Migration() {

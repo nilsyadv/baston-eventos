@@ -1,9 +1,9 @@
 package db
 
 import (
-	"github.com/Nilesh-Coherent/baston-eventos/config"
-	"github.com/Nilesh-Coherent/baston-eventos/log"
-	dbs "github.com/Nilesh-Coherent/common-service-evnt/pkg/db"
+	"github.com/nilsyadv/baston-eventos/config"
+	"github.com/nilsyadv/baston-eventos/log"
+	dbs "github.com/nilsyadv/common-service-evnt/pkg/db"
 )
 
 var DB *dbs.DB

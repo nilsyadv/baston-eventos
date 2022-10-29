@@ -5,9 +5,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-
-	"github.com/Nilesh-Coherent/baston-eventos/config"
-	"github.com/Nilesh-Coherent/baston-eventos/log"
+	"github.com/nilsyadv/baston-eventos/config"
+	"github.com/nilsyadv/baston-eventos/log"
 )
 
 func RegisterRouter(route *mux.Router) {

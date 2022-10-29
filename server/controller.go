@@ -5,7 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/Nilesh-Coherent/baston-eventos/internal/controller"
+	"github.com/nilsyadv/baston-eventos/internal/controller"
 )
 
 func CreateCategoryRoute(route *mux.Router) {

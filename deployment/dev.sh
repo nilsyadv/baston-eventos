@@ -1,7 +1,7 @@
 apk --no-cache add  tzdata git
 apk add openssh
 
-go env -w GOPRIVATE=github.com/Nilesh-Coherent/*
+go env -w GOPRIVATE=github.com/nilsyadv/*
 echo "StrictHostKeyChecking no " > /root/.ssh/config
 printf "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root/.gitconfig
 

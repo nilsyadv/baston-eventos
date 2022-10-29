@@ -5,8 +5,8 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 
-	"github.com/Nilesh-Coherent/baston-eventos/internal/util"
-	"github.com/Nilesh-Coherent/common-service-evnt/pkg/model"
+	"github.com/nilsyadv/baston-eventos/internal/util"
+	"github.com/nilsyadv/common-service-evnt/pkg/model"
 )
 
 type Payment struct {

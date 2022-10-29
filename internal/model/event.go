@@ -3,7 +3,7 @@ package model
 import (
 	uuid "github.com/satori/go.uuid"
 
-	"github.com/Nilesh-Coherent/common-service-evnt/pkg/model"
+	"github.com/nilsyadv/common-service-evnt/pkg/model"
 )
 
 type Event struct {

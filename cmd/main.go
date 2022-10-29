@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Nilesh-Coherent/baston-eventos/config"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/db"
-	"github.com/Nilesh-Coherent/baston-eventos/server"
+	"github.com/nilsyadv/baston-eventos/config"
+	"github.com/nilsyadv/baston-eventos/internal/db"
+	"github.com/nilsyadv/baston-eventos/server"
 )
 
 func main() {

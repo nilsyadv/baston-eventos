@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/Nilesh-Coherent/common-service-evnt/pkg/config"
+	"github.com/nilsyadv/common-service-evnt/pkg/config"
 )
 
 var Conf config.IConfig

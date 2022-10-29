@@ -5,7 +5,7 @@ import (
 
 	uuid "github.com/satori/go.uuid"
 
-	custerror "github.com/Nilesh-Coherent/baston-eventos/error"
+	custerror "github.com/nilsyadv/baston-eventos/error"
 )
 
 // ParseID Used to Parse Id From String

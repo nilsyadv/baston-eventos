@@ -2,7 +2,7 @@
 FROM golang:1.16-alpine  AS deps
 ARG ssh_prv_key
 RUN apk --no-cache add tzdata git openssh
-RUN go env -w GOPRIVATE=github.com/Nilesh-Coherent/*
+RUN go env -w GOPRIVATE=github.com/nilsyadv/*
 RUN mkdir /root/.ssh
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 RUN printf "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root/.gitconfig

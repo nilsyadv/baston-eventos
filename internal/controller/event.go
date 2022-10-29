@@ -6,10 +6,10 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/Nilesh-Coherent/baston-eventos/internal/model"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/service"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/util"
-	"github.com/Nilesh-Coherent/baston-eventos/internal/web"
+	"github.com/nilsyadv/baston-eventos/internal/model"
+	"github.com/nilsyadv/baston-eventos/internal/service"
+	"github.com/nilsyadv/baston-eventos/internal/util"
+	"github.com/nilsyadv/baston-eventos/internal/web"
 )
 
 type EventController struct{}

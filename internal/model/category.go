@@ -1,6 +1,6 @@
 package model
 
-import "github.com/Nilesh-Coherent/common-service-evnt/pkg/model"
+import "github.com/nilsyadv/common-service-evnt/pkg/model"
 
 type Category struct {
 	model.Trandb
